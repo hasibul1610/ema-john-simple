@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Cart from '../Cart/Cart';
 import Product from '../Product/Product';
+import {addToDb, getStoredCart} from '../../utilities/fakedb';
 import './Shop.css'
 
 const Shop = () => {
@@ -14,9 +15,19 @@ const Shop = () => {
 
     },[])
 
+    useEffect(()=>{
+        const saveCart = getStoredCart();
+        for(const key in saveCart){
+            console.log(key);
+        }
+    },[])
+
     const handleAddToCart =(product) =>{
         const newCart = [...cart, product];
-        setCart(newCart)
+        setCart(newCart);
+        //Save to loacl storage for now
+        addToDb(product.key);
+
     }
 
     return (
